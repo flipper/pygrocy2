@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="pygrocy",
-    version="2.1.0",
+    name="pygrocy2",
+    version="2.2.0",
     author="Sebastian Rutofski",
     author_email="kontakt@sebastian-rutofski.de",
     description="",
@@ -18,7 +18,7 @@ setuptools.setup(
         "requests",
         "backports.zoneinfo;python_version<'3.9'",  # backports can be removed when python 3.8 support is dropped
         "deprecation~=2.1.0",
-        "pydantic>=1.8.2,<1.11.0",
+        "pydantic~=2.10.4",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
