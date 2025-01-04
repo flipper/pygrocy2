@@ -24,3 +24,6 @@ class EntityType(str, Enum):
     USER_OBJECTS = "userobjects"
     MEAL_PLAN = "meal_plan"
     MEAL_PLAN_SECTIONS = "meal_plan_sections"
+
+    def __str__(self):
+        return self.value
