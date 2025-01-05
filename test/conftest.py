@@ -3,7 +3,7 @@ from typing import List
 
 import pytest
 
-from pygrocy import Grocy
+from pygrocy.grocy import Grocy
 
 
 @pytest.fixture
