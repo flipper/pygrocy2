@@ -7,8 +7,8 @@ from typing import Any, Dict, List, Optional
 from urllib.parse import urljoin
 
 import requests
-from pydantic import BaseModel, Extra, Field, root_validator, validator
-from pydantic.schema import date
+from pydantic import model_validator, BaseModel, Extra, Field, validator
+from datetime import date
 
 from pygrocy import EntityType
 from pygrocy.utils import grocy_datetime_str, localize_datetime, parse_date
@@ -63,7 +63,7 @@ class RecipeDetailsResponse(BaseModel):
     description: Optional[str] = None
     base_servings: int
     desired_servings: int
-    picture_file_name: Optional[str]
+    picture_file_name: Optional[str] = None
     row_created_timestamp: datetime
     userfields: Optional[Dict] = None
 
@@ -94,7 +94,7 @@ class ProductData(BaseModel):
     picture_file_name: Optional[str] = None
     allow_partial_units_in_stock: Optional[bool] = False
     row_created_timestamp: datetime
-    min_stock_amount: Optional[float]
+    min_stock_amount: Optional[float] = None
     default_best_before_days: int
 
     location_id_validator = _field_not_empty_validator("location_id")
@@ -113,7 +113,7 @@ class ChoreData(BaseModel):
     assignment_type: Optional[str] = None
     assignment_config: Optional[str] = None
     next_execution_assigned_to_user_id: Optional[int] = None
-    userfields: Optional[Dict]
+    userfields: Optional[Dict] = None
 
     next_execution_assigned_to_user_id_validator = _field_not_empty_validator(
         "next_execution_assigned_to_user_id"
@@ -174,7 +174,7 @@ class ProductDetailsResponse(BaseModel):
     product: ProductData
     quantity_unit_stock: QuantityUnitData
     default_quantity_unit_purchase: QuantityUnitData
-    barcodes: Optional[List[ProductBarcodeData]] = Field(alias="product_barcodes")
+    barcodes: Optional[List[ProductBarcodeData]] = Field(None, alias="product_barcodes")
     location: Optional[LocationData] = None
 
 
@@ -296,7 +296,8 @@ class SystemConfigDto(BaseModel, extra=Extra.allow):
     currency: str = Field(alias="CURRENCY")
     feature_flags: Dict[str, Any]
 
-    @root_validator(pre=True)
+    @model_validator(mode="before")
+    @classmethod
     def feature_flags_root_validator(cls, fields: Dict[str, Any]) -> Dict[str, Any]:
         """Pydantic root validator to add all "FEATURE_FLAG_" settings to Dict."""
         features: Dict[str, Any] = {}
