@@ -797,7 +797,7 @@ class GrocyApiClient(object):
         self, query_filters: List[str] = None
     ) -> List[MealPlanSectionResponse]:
         parsed_json = self.get_generic_objects_for_type(
-            EntityType.MEAL_PLAN_SECTIONS, query_filters
+            EntityType.MEAL_PLAN_SECTIONS.value, query_filters
         )
         if parsed_json:
             return [MealPlanSectionResponse(**resp) for resp in parsed_json]
