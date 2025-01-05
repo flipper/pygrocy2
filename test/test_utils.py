@@ -70,7 +70,7 @@ class TestUtils:
         localized_datetime = utils.localize_datetime(date)
 
         assert localized_datetime == datetime(
-            2022, 7, 10, 21, 17, 34, 633809, tzinfo=zoneinfo.ZoneInfo("localtime")
+            2022, 7, 10, 21, 17, 34, 633809, tzinfo=zoneinfo.ZoneInfo("Europe/Paris")
         )
 
     def test_localize_datetime_input_timezone_aware(self):

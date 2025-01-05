@@ -1,14 +1,13 @@
 import base64
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, date
 from enum import Enum
 from typing import Any, Dict, List, Optional
 from urllib.parse import urljoin
 
 import requests
 from pydantic import BaseModel, Extra, Field, root_validator, validator
-from pydantic.schema import date
 
 from pygrocy import EntityType
 from pygrocy.utils import grocy_datetime_str, localize_datetime, parse_date
