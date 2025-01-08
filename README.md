@@ -1,6 +1,5 @@
-**This project is de-facto unmaintained as haven't been using grocy for a while. Feel free to fork and create pygrocy2!**
+# pygrocy2
 
-# pygrocy
 [![Development Build Status](https://api.travis-ci.com/SebRut/pygrocy.svg?branch=develop)](https://travis-ci.com/SebRut/pygrocy)
 [![PyPI](https://img.shields.io/pypi/v/pygrocy.svg)](https://pypi.org/project/pygrocy/)
 ![Python Version](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10-blue)
@@ -12,24 +11,30 @@
 
 ## Installation
 
-`pip install pygrocy`
+`pip install pygrocy2`
 
 ## Usage
+
 Import the package:
+
 ```python
-from pygrocy import Grocy
+from pygrocy2 import Grocy
 ```
 
 Obtain a grocy instance:
+
 ```python
 grocy = Grocy("https://example.com", "GROCY_API_KEY")
 ```
+
 or
+
 ```python
 grocy = Grocy("https://example.com", "GROCY_API_KEY", port = 9192, verify_ssl = True)
 ```
 
 Get current stock:
+
 ```python
 for entry in grocy.stock():
     print("{} in stock for product id {}".format(entry.available_amount, entry.id))
@@ -37,7 +42,8 @@ for entry in grocy.stock():
 
 # Support
 
-If you need help using pygrocy check the [discussions](https://github.com/SebRut/pygrocy/issues) section. Feel free to create an issue for feature requests, bugs and errors in the library.
+If you need help using pygrocy check the [discussions](https://github.com/flipper/pygrocy2/issues) section. Feel free to create an issue for feature requests, bugs and errors in the library.
 
 ## Development testing
-You need tox and Python 3.8/9/10 to run the tests. Navigate to the root dir of `pygrocy` and execute `tox` to run the tests.
+
+You need tox and Python 3.13 to run the tests. Navigate to the root dir of `pygrocy2` and execute `tox` to run the tests.

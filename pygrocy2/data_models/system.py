@@ -1,8 +1,7 @@
 from datetime import date, datetime
-from typing import List
 
-from pygrocy.base import DataModel
-from pygrocy.grocy_api_client import SystemConfigDto, SystemInfoDto, SystemTimeDto
+from pygrocy2.base import DataModel
+from pygrocy2.grocy_api_client import SystemConfigDto, SystemInfoDto, SystemTimeDto
 
 
 class SystemInfo(DataModel):
@@ -114,5 +113,5 @@ class SystemConfig(DataModel):
         return self._currency
 
     @property
-    def enabled_features(self) -> List[str]:
+    def enabled_features(self) -> list[str]:
         return self._enabled_features

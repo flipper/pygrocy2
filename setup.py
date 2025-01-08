@@ -5,18 +5,16 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pygrocy2",
-    version="2.2.0",
-    author="Sebastian Rutofski",
-    author_email="kontakt@sebastian-rutofski.de",
+    version="2.3.3",
+    author="Flipper",
     description="",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/sebrut/pygrocy",
+    url="https://github.com/flipper/pygrocy2",
     license="MIT",
     packages=setuptools.find_packages(),
     install_requires=[
         "requests",
-        "backports.zoneinfo;python_version<'3.9'",  # backports can be removed when python 3.8 support is dropped
         "deprecation~=2.1.0",
         "pydantic~=2.10.4",
     ],

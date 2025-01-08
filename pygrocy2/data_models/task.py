@@ -1,9 +1,8 @@
 from datetime import datetime
-from typing import Dict
 
-from pygrocy.base import DataModel
-from pygrocy.data_models.user import User
-from pygrocy.grocy_api_client import TaskCategoryDto, TaskResponse
+from pygrocy2.base import DataModel
+from pygrocy2.data_models.user import User
+from pygrocy2.grocy_api_client import TaskCategoryDto, TaskResponse
 
 
 class TaskCategory(DataModel):
@@ -89,5 +88,5 @@ class Task(DataModel):
         return self._assigned_to_user
 
     @property
-    def userfields(self) -> Dict[str, str]:
+    def userfields(self) -> dict[str, str]:
         return self._userfields

@@ -1,6 +1,5 @@
 import logging
 from datetime import datetime
-from typing import List
 
 import deprecation
 
@@ -37,7 +36,7 @@ class Grocy(object):
         base_url,
         api_key,
         port: int = DEFAULT_PORT_NUMBER,
-        path: str = None,
+        path: str | None = None,
         verify_ssl=True,
         debug=False,
     ):
@@ -48,16 +47,15 @@ class Grocy(object):
         if debug:
             _LOGGER.setLevel(logging.DEBUG)
 
-    def stock(self) -> List[Product]:
+    def stock(self) -> list[Product]:
         raw_stock = self._api_client.get_stock()
-        stock = [Product(resp) for resp in raw_stock]
-        return stock
+        return [Product(resp) for resp in raw_stock]
 
     @deprecation.deprecated(details="Use due_products instead")
-    def expiring_products(self, get_details: bool = False) -> List[Product]:
+    def expiring_products(self, get_details: bool = False) -> list[Product]:
         return self.due_products(get_details)
 
-    def due_products(self, get_details: bool = False) -> List[Product]:
+    def due_products(self, get_details: bool = False) -> list[Product]:
         raw_due_products = self._api_client.get_volatile_stock().due_products
         due_products = [Product(resp) for resp in raw_due_products]
 
@@ -66,7 +64,7 @@ class Grocy(object):
                 item.get_details(self._api_client)
         return due_products
 
-    def overdue_products(self, get_details: bool = False) -> List[Product]:
+    def overdue_products(self, get_details: bool = False) -> list[Product]:
         raw_overdue_products = self._api_client.get_volatile_stock().overdue_products
         overdue_products = [Product(resp) for resp in raw_overdue_products]
 
@@ -75,7 +73,7 @@ class Grocy(object):
                 item.get_details(self._api_client)
         return overdue_products
 
-    def expired_products(self, get_details: bool = False) -> List[Product]:
+    def expired_products(self, get_details: bool = False) -> list[Product]:
         raw_expired_products = self._api_client.get_volatile_stock().expired_products
         expired_products = [Product(resp) for resp in raw_expired_products]
 
@@ -84,7 +82,7 @@ class Grocy(object):
                 item.get_details(self._api_client)
         return expired_products
 
-    def missing_products(self, get_details: bool = False) -> List[Product]:
+    def missing_products(self, get_details: bool = False) -> list[Product]:
         raw_missing_products = self._api_client.get_volatile_stock().missing_products
         missing_products = [Product(resp) for resp in raw_missing_products]
 
@@ -97,22 +95,24 @@ class Grocy(object):
         resp = self._api_client.get_product(product_id)
         if resp:
             return Product(resp)
+        return None
 
     def product_by_barcode(self, barcode: str) -> Product:
         resp = self._api_client.get_product_by_barcode(barcode)
         if resp:
             return Product(resp)
+        return None
 
-    def all_products(self) -> List[Product]:
+    def all_products(self) -> list[Product]:
         raw_products = self.get_generic_objects_for_type(EntityType.PRODUCTS)
-        from pygrocy.grocy_api_client import ProductData
+        from pygrocy2.grocy_api_client import ProductData
 
         product_datas = [ProductData(**product) for product in raw_products]
         return [Product(product) for product in product_datas]
 
     def chores(
-        self, get_details: bool = False, query_filters: List[str] = None
-    ) -> List[Chore]:
+        self, get_details: bool = False, query_filters: list[str] | None = None
+    ) -> list[Chore]:
         raw_chores = self._api_client.get_chores(query_filters)
         chores = [Chore(chore) for chore in raw_chores]
 
@@ -139,7 +139,7 @@ class Grocy(object):
         product_id,
         amount: float,
         price: float,
-        best_before_date: datetime = None,
+        best_before_date: datetime | None = None,
         transaction_type: TransactionType = TransactionType.PURCHASE,
     ):
         return self._api_client.add_product(
@@ -178,10 +178,10 @@ class Grocy(object):
         self,
         product_id: int,
         new_amount: float,
-        best_before_date: datetime = None,
-        shopping_location_id: int = None,
-        location_id: int = None,
-        price: float = None,
+        best_before_date: datetime | None = None,
+        shopping_location_id: int | None = None,
+        location_id: int | None = None,
+        price: float | None = None,
         get_details: bool = True,
     ) -> Product:
         product = Product(
@@ -204,7 +204,7 @@ class Grocy(object):
         barcode: str,
         amount: float,
         price: float,
-        best_before_date: datetime = None,
+        best_before_date: datetime | None = None,
         get_details: bool = True,
     ) -> Product:
         product = Product(
@@ -236,9 +236,9 @@ class Grocy(object):
         self,
         barcode: str,
         new_amount: float,
-        best_before_date: datetime = None,
-        location_id: int = None,
-        price: float = None,
+        best_before_date: datetime | None = None,
+        location_id: int | None = None,
+        price: float | None = None,
         get_details: bool = True,
     ) -> Product:
         product = Product(
@@ -252,8 +252,8 @@ class Grocy(object):
         return product
 
     def shopping_list(
-        self, get_details: bool = False, query_filters: List[str] = None
-    ) -> List[ShoppingListProduct]:
+        self, get_details: bool = False, query_filters: list[str] | None = None
+    ) -> list[ShoppingListProduct]:
         raw_shoppinglist = self._api_client.get_shopping_list(query_filters)
         shopping_list = [ShoppingListProduct(resp) for resp in raw_shoppinglist]
 
@@ -268,9 +268,9 @@ class Grocy(object):
     def add_product_to_shopping_list(
         self,
         product_id: int,
-        shopping_list_id: int = None,
-        amount: float = None,
-        quantity_unit_id: int = None,
+        shopping_list_id: int | None = None,
+        amount: float | None = None,
+        quantity_unit_id: int | None = None,
     ):
         return self._api_client.add_product_to_shopping_list(
             product_id, shopping_list_id, amount, quantity_unit_id
@@ -286,7 +286,7 @@ class Grocy(object):
             product_id, shopping_list_id, amount
         )
 
-    def product_groups(self, query_filters: List[str] = None) -> List[Group]:
+    def product_groups(self, query_filters: list[str] | None = None) -> list[Group]:
         raw_groups = self._api_client.get_product_groups(query_filters)
         return [Group(resp) for resp in raw_groups]
 
@@ -307,18 +307,21 @@ class Grocy(object):
         raw_system_info = self._api_client.get_system_info()
         if raw_system_info:
             return SystemInfo(raw_system_info)
+        return None
 
     def get_system_time(self) -> SystemTime:
         raw_system_time = self._api_client.get_system_time()
         if raw_system_time:
             return SystemTime(raw_system_time)
+        return None
 
     def get_system_config(self) -> SystemConfig:
         raw_system_config = self._api_client.get_system_config()
         if raw_system_config:
             return SystemConfig(raw_system_config)
+        return None
 
-    def tasks(self, query_filters: List[str] = None) -> List[Task]:
+    def tasks(self, query_filters: list[str] | None = None) -> list[Task]:
         raw_tasks = self._api_client.get_tasks(query_filters)
         return [Task(task) for task in raw_tasks]
 
@@ -326,12 +329,12 @@ class Grocy(object):
         resp = self._api_client.get_task(task_id)
         return Task(resp)
 
-    def complete_task(self, task_id, done_time: datetime = None):
+    def complete_task(self, task_id, done_time: datetime | None = None):
         return self._api_client.complete_task(task_id, done_time)
 
     def meal_plan(
-        self, get_details: bool = False, query_filters: List[str] = None
-    ) -> List[MealPlanItem]:
+        self, get_details: bool = False, query_filters: list[str] | None = None
+    ) -> list[MealPlanItem]:
         raw_meal_plan = self._api_client.get_meal_plan(query_filters)
         meal_plan = [MealPlanItem(data) for data in raw_meal_plan]
 
@@ -344,10 +347,11 @@ class Grocy(object):
         recipe = self._api_client.get_recipe(recipe_id)
         if recipe:
             return RecipeItem(recipe)
+        return None
 
     def batteries(
-        self, query_filters: List[str] = None, get_details: bool = False
-    ) -> List[Battery]:
+        self, query_filters: list[str] | None = None, get_details: bool = False
+    ) -> list[Battery]:
         raw_batteries = self._api_client.get_batteries(query_filters)
         batteries = [Battery(bat) for bat in raw_batteries]
 
@@ -360,12 +364,16 @@ class Grocy(object):
         battery = self._api_client.get_battery(battery_id)
         if battery:
             return Battery(battery)
+        return None
 
-    def charge_battery(self, battery_id: int, tracked_time: datetime = None):
+    def charge_battery(self, battery_id: int, tracked_time: datetime | None = None):
         return self._api_client.charge_battery(battery_id, tracked_time)
 
     def add_generic(self, entity_type: EntityType, data):
         return self._api_client.add_generic(entity_type.value, data)
+
+    def get_generic(self, entity_type: EntityType, object_id: int):
+        return self._api_client.get_generic(entity_type.value, object_id)
 
     def update_generic(self, entity_type: EntityType, object_id: int, updated_data):
         return self._api_client.update_generic(
@@ -376,15 +384,15 @@ class Grocy(object):
         return self._api_client.delete_generic(entity_type.value, object_id)
 
     def get_generic_objects_for_type(
-        self, entity_type: EntityType, query_filters: List[str] = None
+        self, entity_type: EntityType, query_filters: list[str] | None = None
     ):
         return self._api_client.get_generic_objects_for_type(
             entity_type.value, query_filters
         )
 
     def meal_plan_sections(
-        self, query_filters: List[str] = None
-    ) -> List[MealPlanSection]:
+        self, query_filters: list[str] | None = None
+    ) -> list[MealPlanSection]:
         raw_sections = self._api_client.get_meal_plan_sections(query_filters)
         return [MealPlanSection(section) for section in raw_sections]
 
@@ -393,12 +401,14 @@ class Grocy(object):
 
         if section:
             return MealPlanSection(section)
+        return None
 
-    def users(self) -> List[User]:
+    def users(self) -> list[User]:
         user_dtos = self._api_client.get_users()
         return [User(user) for user in user_dtos]
 
-    def user(self, user_id: int = None) -> User:
+    def user(self, user_id: int | None = None) -> User:
         user = self._api_client.get_user(user_id=user_id)
         if user:
             return User(user)
+        return None

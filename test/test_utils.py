@@ -1,12 +1,8 @@
 from datetime import datetime
 
-try:
-    import zoneinfo
-except ImportError:
-    # backports can be removed when python 3.8 support is dropped
-    from backports import zoneinfo
+import zoneinfo
 
-import pygrocy.utils as utils
+import pygrocy2.utils as utils
 
 
 class TestUtils:

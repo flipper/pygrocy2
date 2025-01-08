@@ -1,5 +1,5 @@
-from pygrocy.base import DataModel
-from pygrocy.grocy_api_client import UserDto
+from pygrocy2.base import DataModel
+from pygrocy2.grocy_api_client import UserDto
 
 
 class User(DataModel):

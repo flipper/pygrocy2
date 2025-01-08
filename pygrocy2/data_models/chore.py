@@ -1,10 +1,9 @@
 from datetime import datetime
 from enum import Enum
-from typing import Dict
 
-from pygrocy.base import DataModel
-from pygrocy.data_models.user import User
-from pygrocy.grocy_api_client import (
+from pygrocy2.base import DataModel
+from pygrocy2.data_models.user import User
+from pygrocy2.grocy_api_client import (
     ChoreDetailsResponse,
     CurrentChoreResponse,
     GrocyApiClient,
@@ -135,7 +134,7 @@ class Chore(DataModel):
         return self._next_execution_assigned_to_user_id
 
     @property
-    def userfields(self) -> Dict[str, str]:
+    def userfields(self) -> dict[str, str]:
         return self._userfields
 
     @property

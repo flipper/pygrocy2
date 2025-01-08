@@ -2,9 +2,9 @@ from datetime import datetime
 
 import pytest
 
-from pygrocy.data_models.task import TaskCategory
-from pygrocy.data_models.user import User
-from pygrocy.errors import GrocyError
+from pygrocy2.data_models.task import TaskCategory
+from pygrocy2.data_models.user import User
+from pygrocy2.errors import GrocyError
 
 
 class TestTasks:

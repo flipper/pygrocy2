@@ -1,8 +1,7 @@
 from datetime import datetime
-from typing import List, Optional
 
-from pygrocy.base import DataModel
-from pygrocy.grocy_api_client import (
+from pygrocy2.base import DataModel
+from pygrocy2.grocy_api_client import (
     CurrentStockResponse,
     GrocyApiClient,
     LocationData,
@@ -26,7 +25,7 @@ class ProductBarcode(DataModel):
         return self._barcode
 
     @property
-    def amount(self) -> Optional[float]:
+    def amount(self) -> float | None:
         return self._amount
 
 
@@ -168,11 +167,11 @@ class Product(DataModel):
         return self._best_before_date
 
     @property
-    def barcodes(self) -> List[str]:
+    def barcodes(self) -> list[str]:
         return [barcode.barcode for barcode in self.product_barcodes]
 
     @property
-    def product_barcodes(self) -> List[ProductBarcode]:
+    def product_barcodes(self) -> list[ProductBarcode]:
         return self._barcodes
 
     @property

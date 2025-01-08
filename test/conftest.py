@@ -1,27 +1,26 @@
 from test.test_const import CONST_BASE_URL, CONST_PORT, CONST_SSL
-from typing import List
 
 import pytest
 
-from pygrocy import Grocy
+from pygrocy2 import Grocy
 
 
 @pytest.fixture
 def grocy():
-    yield Grocy(CONST_BASE_URL, "demo_mode", verify_ssl=CONST_SSL, port=CONST_PORT)
+    return Grocy(CONST_BASE_URL, "demo_mode", verify_ssl=CONST_SSL, port=CONST_PORT)
 
 
 # noinspection PyProtectedMember
 @pytest.fixture
 def grocy_api_client(grocy):
-    yield grocy._api_client
+    return grocy._api_client
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def vcr_config():
-    yield {"record_mode": "once", "decode_compressed_response": True}
+    return {"record_mode": "once", "decode_compressed_response": True}
 
 
 @pytest.fixture
-def invalid_query_filter() -> List[str]:
-    yield ["invalid"]
+def invalid_query_filter() -> list[str]:
+    return ["invalid"]

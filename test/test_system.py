@@ -1,7 +1,7 @@
 from datetime import date, datetime
 
 import pytest
-from pygrocy.data_models.system import SystemConfig, SystemInfo, SystemTime
+from pygrocy2.data_models.system import SystemConfig, SystemInfo, SystemTime
 
 
 class TestSystem:

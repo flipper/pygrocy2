@@ -2,7 +2,7 @@ import datetime
 
 import pytest
 
-from pygrocy.errors import GrocyError
+from pygrocy2.errors import GrocyError
 
 
 class TestMealPlanSections:

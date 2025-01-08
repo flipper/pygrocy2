@@ -2,12 +2,13 @@ from datetime import datetime
 
 import pytest
 
-from pygrocy.errors import GrocyError
+from pygrocy2.errors import GrocyError
+from pygrocy2.grocy import Grocy
 
 
 class TestBattery:
     @pytest.mark.vcr
-    def test_get_batteries_valid(self, grocy):
+    def test_get_batteries_valid(self, grocy: Grocy):
         batteries = grocy.batteries(get_details=False)
 
         assert len(batteries) == 4
