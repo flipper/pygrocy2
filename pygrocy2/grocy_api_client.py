@@ -6,7 +6,7 @@ import logging
 from typing import Any
 from urllib.parse import urljoin
 
-from pydantic import BaseModel, Field, field_validator, model_validator, ValidationInfo
+from pydantic import BaseModel, Field, field_validator, model_validator
 import requests
 
 from .data_models.generic import EntityType
@@ -34,7 +34,7 @@ class ShoppingListItem(BaseModel):
     id: int
     product_id: int | None = None
     note: str | None = None
-    amount: float
+    amount: float | None = None
     row_created_timestamp: datetime
     shopping_list_id: int
     done: int
@@ -61,7 +61,7 @@ class RecipeDetailsResponse(BaseModel):
     description: str | None = None
     base_servings: int
     desired_servings: int
-    picture_file_name: str | None
+    picture_file_name: str | None = None
     row_created_timestamp: datetime
     userfields: dict | None = None
 
@@ -92,7 +92,7 @@ class ProductData(BaseModel):
     picture_file_name: str | None = None
     allow_partial_units_in_stock: bool | None = False
     row_created_timestamp: datetime
-    min_stock_amount: float | None
+    min_stock_amount: float | None = None
     default_best_before_days: int
 
     location_id_validator = _field_not_empty_validator("location_id")
@@ -172,7 +172,7 @@ class ProductDetailsResponse(BaseModel):
     product: ProductData
     quantity_unit_stock: QuantityUnitData
     default_quantity_unit_purchase: QuantityUnitData
-    barcodes: list[ProductBarcodeData] | None = Field(alias="product_barcodes")
+    barcodes: list[ProductBarcodeData] | None = Field(None, alias="product_barcodes")
     location: LocationData | None = None
 
 
@@ -226,7 +226,7 @@ class CurrentBatteryResponse(BaseModel):
 class BatteryData(BaseModel):
     id: int
     name: str
-    description: str
+    description: str | None = None
     used_in: str
     charge_interval_days: int
     created_timestamp: datetime = Field(alias="row_created_timestamp")
@@ -243,7 +243,7 @@ class BatteryDetailsResponse(BaseModel):
 
 class MealPlanSectionResponse(BaseModel):
     id: int | None = None
-    name: str
+    name: str | None = None
     sort_number: int | None = None
     row_created_timestamp: datetime
 
