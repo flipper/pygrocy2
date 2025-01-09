@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.4.0](https://github.com/flipper/pygrocy2/tree/2.4.0) (2025-01-09)
+
+[Full Changelog](https://github.com/flipper/pygrocy2/compare/v2.2.0...2.4.0)
+
+**Merged pull requests:**
+
+- fix: set default value None for optional fields so we do not get validation error when the field is missing [\#2](https://github.com/flipper/pygrocy2/pull/2) ([umglurf](https://github.com/umglurf))
+
 ## [v2.2.0](https://github.com/flipper/pygrocy2/tree/v2.2.0) (2024-12-23)
 
 [Full Changelog](https://github.com/flipper/pygrocy2/compare/v2.1.0...v2.2.0)
