@@ -227,7 +227,7 @@ class BatteryData(BaseModel):
     id: int
     name: str
     description: str | None = None
-    used_in: str
+    used_in: str | None = None
     charge_interval_days: int
     created_timestamp: datetime = Field(alias="row_created_timestamp")
     userfields: dict | None = None
