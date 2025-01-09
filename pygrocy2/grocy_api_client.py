@@ -111,7 +111,7 @@ class ChoreData(BaseModel):
     assignment_type: str | None = None
     assignment_config: str | None = None
     next_execution_assigned_to_user_id: int | None = None
-    userfields: dict | None
+    userfields: dict | None = None
 
     next_execution_assigned_to_user_id_validator = _field_not_empty_validator(
         "next_execution_assigned_to_user_id"
@@ -227,7 +227,7 @@ class BatteryData(BaseModel):
     id: int
     name: str
     description: str | None = None
-    used_in: str
+    used_in: str | None = None
     charge_interval_days: int
     created_timestamp: datetime = Field(alias="row_created_timestamp")
     userfields: dict | None = None
